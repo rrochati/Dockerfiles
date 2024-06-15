@@ -26,6 +26,7 @@ services:
       networks:
         - kube_news_net
 
+# Atenção: Volumes e network tem que entrar na mesma identação do services (na raiz)
 volumes:
   postgre_docker_vol:
 

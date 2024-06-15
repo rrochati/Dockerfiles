@@ -25,6 +25,8 @@ services:
         DB_HOST: kube_news_db
       networks:
         - kube_news_net
+      depends_on:
+        - postgres
 
 # Atenção: Volumes e network tem que entrar na mesma identação do services (na raiz)
 volumes:

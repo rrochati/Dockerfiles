@@ -15,7 +15,10 @@ services:
 
   kube_news:
       container_name: kube_news
-      image: rrochati/kube-news:v1
+      image: teste/kube-news:v1
+      build:
+        context: ./src
+        dockerfile: Dockerfile
       ports:
         - "8080:8080"
       environment:

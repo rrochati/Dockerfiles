@@ -5,9 +5,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: kubenews
-      POSTGRES_USER: kubenews
-      POSTGRES_PASSWORD: Pg123
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgre_docker_vol:/var/lib/postgresql/data 
     networks:
@@ -15,16 +15,16 @@ services:
 
   kube_news:
       container_name: kube_news
-      image: teste/kube-news:v1
+      image: teste/kube-news:${KUBE_NEWS_TAG:-latest} #se essa variável não for definida, será latest
       build:
         context: ./src
         dockerfile: Dockerfile
       ports:
         - "8080:8080"
       environment:
-        DB_DATABASE: kubenews
-        DB_USERNAME: kubenews
-        DB_PASSWORD: Pg123
+        DB_DATABASE: ${POSTGRES_DB}
+        DB_USERNAME: ${POSTGRES_USER}
+        DB_PASSWORD: ${POSTGRES_PASSWORD}
         DB_HOST: kube_news_db
       networks:
         - kube_news_net

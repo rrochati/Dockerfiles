@@ -12,10 +12,11 @@ services:
       - postgre_docker_vol:/var/lib/postgresql/data 
     networks:
       - kube_news_net
-
+    restart: always
+  
   kube_news:
       container_name: kube_news
-      image: teste/kube-news:${KUBE_NEWS_TAG:-latest} #se essa variável não for definida, será latest
+      image: rrochati/kube-news:${KUBE_NEWS_TAG:-latest} #se essa variável não for definida, será latest
       build:
         context: ./src
         dockerfile: Dockerfile
@@ -30,10 +31,12 @@ services:
         - kube_news_net
       depends_on:
         - postgres
+      restart: unless-stopped
 
 # Atenção: Volumes e network tem que entrar na mesma identação do services (na raiz)
 volumes:
   postgre_docker_vol:
+    name: docker_postgre_docker_vol
 
 networks:
   kube_news_net:
